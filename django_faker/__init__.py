@@ -39,7 +39,7 @@ class DjangoFaker(object):
         return codename
 
     @classmethod
-    def get_generator(cls, locale=None, providers=None, codename=None):
+    def get_generator(cls, locale=None, providers=None, codename=None, seed=None):
         """
         use a codename to cache generators
         """
@@ -51,7 +51,9 @@ class DjangoFaker(object):
             # and remember in cache
             from faker import Faker as FakerGenerator
             cls.generators[codename] = FakerGenerator(locale, providers)
-            cls.generators[codename].seed(cls.generators[codename].random_int())
+            if seed is None:
+                seed = cls.generators[codename].random_int()
+            cls.generators[codename].seed(seed)
 
         return cls.generators[codename]
 
