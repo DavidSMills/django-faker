@@ -58,7 +58,7 @@ class DjangoFaker(object):
         return cls.generators[codename]
 
     @classmethod
-    def get_populator(cls, locale=None, providers=None, seed=None):
+    def get_populator(cls, locale=None, providers=None):
         """
 
         uses:
@@ -82,7 +82,7 @@ class DjangoFaker(object):
         codename = cls.get_codename(locale, providers)
 
         if codename not in cls.populators:
-            generator = cls.generators.get(codename, None, seed=seed) or cls.get_generator(codename=codename, seed=seed)
+            generator = cls.generators.get(codename, None) or cls.get_generator(codename=codename)
 
             from .populator import Populator
             cls.populators[codename] = Populator(generator)
