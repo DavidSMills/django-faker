@@ -37,7 +37,7 @@ class DjangoFaker(object):
             codename += "-" + "-".join(sorted(providers))
 
         if seed is not None:
-            codename += "-" + seed
+            codename += "-" + str(seed)
 
         return codename
 
