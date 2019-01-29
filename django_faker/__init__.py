@@ -57,7 +57,6 @@ class DjangoFaker(object):
             cls.generators[codename] = FakerGenerator(locale, providers)
             if seed is None:
                 seed = cls.generators[codename].random_int()
-                print("Using random seed")
             cls.generators[codename].seed(seed)
 
         return cls.generators[codename]
