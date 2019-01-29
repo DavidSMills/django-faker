@@ -21,7 +21,7 @@ class DjangoFaker(object):
         pass
 
     @staticmethod
-    def get_codename(locale=None, providers=None):
+    def get_codename(locale=None, providers=None, seed=None):
         """
         codename = locale[-Provider]*
         """
@@ -36,6 +36,9 @@ class DjangoFaker(object):
         if providers:
             codename += "-" + "-".join(sorted(providers))
 
+        if seed is not None:
+            codename += "-" + seed
+
         return codename
 
     @classmethod
@@ -44,7 +47,7 @@ class DjangoFaker(object):
         use a codename to cache generators
         """
 
-        codename = codename or cls.get_codename(locale, providers)
+        codename = codename or cls.get_codename(locale, providers, seed)
 
         if codename not in cls.generators:
             # initialize with faker.generator.Generator instance
