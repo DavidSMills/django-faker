@@ -39,7 +39,7 @@ class DjangoFaker(object):
         return codename
 
     @classmethod
-    def get_generator(cls, locale=None, providers=None, codename=None):
+    def get_generator(cls, locale=None, providers=None, codename=None, seed=None):
         """
         use a codename to cache generators
         """
@@ -51,12 +51,14 @@ class DjangoFaker(object):
             # and remember in cache
             from faker import Faker as FakerGenerator
             cls.generators[codename] = FakerGenerator(locale, providers)
-            cls.generators[codename].seed(cls.generators[codename].random_int())
+            if seed is None:
+                seed = cls.generators[codename].random_int()
+            cls.generators[codename].seed(seed)
 
         return cls.generators[codename]
 
     @classmethod
-    def get_populator(cls, locale=None, providers=None):
+    def get_populator(cls, locale=None, providers=None, seed=None):
         """
 
         uses:
@@ -80,7 +82,7 @@ class DjangoFaker(object):
         codename = cls.get_codename(locale, providers)
 
         if codename not in cls.populators:
-            generator = cls.generators.get(codename, None) or cls.get_generator(codename=codename)
+            generator = cls.generators.get(codename, None) or cls.get_generator(codename=codename, seed=seed)
 
             from .populator import Populator
             cls.populators[codename] = Populator(generator)
