@@ -49,7 +49,8 @@ class DjangoFaker(object):
 
         codename = codename or cls.get_codename(locale, providers, seed)
 
-        if codename not in cls.generators:
+        # Refresh if seed given
+        if codename not in cls.generators or seed is not None:
             # initialize with faker.generator.Generator instance
             # and remember in cache
             from faker import Faker as FakerGenerator
@@ -84,7 +85,8 @@ class DjangoFaker(object):
 
         codename = cls.get_codename(locale, providers, seed)
 
-        if codename not in cls.populators:
+        # Refresh if seed given
+        if codename not in cls.populators or seed is not None:
             generator = cls.generators.get(codename, None) or cls.get_generator(codename=codename, seed=seed)
 
             from .populator import Populator
