@@ -82,7 +82,7 @@ class DjangoFaker(object):
 
         """
 
-        codename = cls.get_codename(locale, providers)
+        codename = cls.get_codename(locale, providers, seed)
 
         if codename not in cls.populators:
             generator = cls.generators.get(codename, None) or cls.get_generator(codename=codename, seed=seed)
